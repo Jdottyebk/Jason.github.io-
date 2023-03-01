@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<link rel="preconnect" href="https://fonts.googleapis.com"> 
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+<link href="https://fonts.googleapis.com/css2?family=Kolker+Brush&display=swap" rel="stylesheet">
+<head>
+  <title>Anna Dowlin</title>
+  <style>
+    body {
+      text-align: center;
+      background: url(https://sweetsimplevegan.com/wp-content/uploads/2021/09/pla%CC%81tanos-Maduros-white-plate-Sweet-Simple-Vegan-3-1.jpg);
+      background-size: cover;
+      background-position: center;
+      color: pink;
+      font-family: Kolker Brush;
+      
+    }
+    p {
+      font-size: 100px;
+    }
+    input {
+      border: 0;
+      padding: 10px;
+      font-size: 18px;
+    }
+    input[type="submit"] {
+      background: pink;
+      color: violet;
+    }
+    img {
+      border-radius: 20px;
+      max-width: 400px;
+      }
+  </style>
+</head>
+<body>
+  <img src="https://cdn.britannica.com/14/5114-004-C9B99800/Flag-Dominican-Republic.jpg">
+  <p>hello my name is jason tejada</p>
+  <input id="Name" placeholder="Your name">
+  <input id="Email" type="email" placeholder="Your email">
+  <input id="submit" type="submit">
+
+
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
+  import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-database.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyCPeD-kG6wO_VeHb5xQt_m7fx45POQhTkw",
+    authDomain: "fir-project-1-1e6ee.firebaseapp.com",
+    databaseURL: "https://fir-project-1-1e6ee-default-rtdb.firebaseio.com",
+    projectId: "fir-project-1-1e6ee",
+    storageBucket: "fir-project-1-1e6ee.appspot.com",
+    messagingSenderId: "32530920951",
+    appId: "1:32530920951:web:f23cfd59d7b6fa6eb1eaf2",
+    measurementId: "G-M7WK8XC059"
+  };
+
+  // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+	const Name = document.querySelector("#Name") 
+	const Email = document.querySelector("#Email")
+	document.querySelector('#submit').addEventListener('click', Submit)
+	
+	function Submit() {
+	  const timestamp = buildTimestamp()
+	  
+	  set(ref(db, timestamp), {
+		  Name: Name.value,
+	      email: Email.value,
+	  });
+
+	  Name.value = ""
+	  Email.value = ""
+	}
+	
+	function buildTimestamp() {
+		  const now = new Date();
+		  let timestamp = now.getFullYear().toString() + "/";
+		  //const month = now.toLocaleString('default', { month: 'long' });
+
+		  let month = now.getMonth()+1   //add 1 because Javascript uses 0 for January
+		  month = month.toString()
+		  month = addLeadingZero(month)
+		  timestamp += month + "/"; 
+
+		  let date = now.getDate().toString()
+		  date = addLeadingZero(date)
+		  timestamp += date + "/";
+
+		  let hours = now.getHours().toString()
+		  hours = addLeadingZero(hours)
+		  timestamp += hours + ":";
+
+		  let minutes = now.getMinutes().toString()
+		  minutes = addLeadingZero(minutes)
+		  timestamp += minutes + ":";
+
+		  let seconds = now.getSeconds().toString()
+		  seconds = addLeadingZero(seconds)
+		  timestamp += seconds;
+  
+		  return timestamp
+		}
+	
+		function addLeadingZero(units) {
+			if (units.length < 2) {
+				units = "0" + units
+			}
+			return units
+		}
+  
+</script>
+</body>
